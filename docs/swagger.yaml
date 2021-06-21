@@ -1,0 +1,104 @@
+openapi: "3.0.0"
+
+info:
+  version: "1.0.0"
+  title: "Web-crawler Legendas TV"
+  description: "Essa api foi criada para amostra de conhecimento técnico."
+
+servers: 
+  - url: "http://localhost:3000/"
+ 
+tags:
+  - name: Breaking Bad
+    description: "Rota destinadas a captura de informações da legenda da série."
+
+paths:
+  /legendas:
+    post:
+      summary: "Salvar dados no MongoDB"
+      description: "Essa rota alimenta a base de dados."
+      tags: 
+        - Breaking Bad
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reqLegendas'
+      responses:
+        200:
+          description: "Requisição aceita"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/resLegendas"
+    get:
+      summary: "Buscar dados salvos"
+      description: "Essa rota tem como finalidade a listagem dos dados coletados."
+      tags: 
+        - "Breaking Bad"
+      responses:
+        200:
+          description: "Requisição aceita"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getSubtitles"
+
+components:
+  schemas:
+    reqLegendas:
+      required:
+        - "login"
+        - "password"
+      properties:
+        login:
+          type: "string"
+          description: "Login do usuário."
+          example: "UserExample"
+        password:
+          type: "string"
+          description: "Senha do usuário."
+          example: "MinhaSenha[exemplo123]"
+    resLegendas:
+      type: "string"
+      example: "Inseridos com sucesso"
+    getSubtitles:
+      items:
+        properties:
+          _id:
+            type: "string"
+            description: "Id da legenda."
+            example: "60cffe42eab42c00152..."
+          nome:
+            type: "string"
+            description: "Nome da legenda."
+            example: "Breaking Bad"
+          downloads:
+            type: "number"
+            description: "Número de downloads da legenda."
+            example: 20
+          likes:
+            type: "number"
+            description: "Número de curtidas da legenda."
+            example: 5
+          unlikes:
+            type: "number"
+            description: "Número de descurtidas da legenda."
+            example: 1
+          sender:
+            type: "string"
+            description: "Nome de quem enviou a legenda."
+            example: 'Fulano de tal'
+          date:
+            type: "string"
+            description: "Data de envio da legenda."
+            example: '01/01/2000'
+          language:
+            type: "string"
+            description: "Idioma da legenda."
+            example: 'Português-BR'
+          downloadLink:
+            type: "string"
+            description: "Link de download da legenda."
+            example: 'http://legendas.tv/downloadarquivo/...'
